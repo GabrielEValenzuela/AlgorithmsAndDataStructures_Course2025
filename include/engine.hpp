@@ -3,10 +3,9 @@
 
 #include <chrono>
 #include <iostream>
-#include <limits>
-#include <string>
-#include <string_view>
 #include <thread>
+#include <string_view>
+#include <unordered_map>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -33,6 +32,9 @@ enum class Operation
     EXIT,         //< Salir del juego
     UNKNOWN       //< Operación desconocida
 };
+
+const std::unordered_map<char, Operation> validOperations = {
+    {'d', Operation::SHOW_DETAILS}, {'b', Operation::SHOW_BOARD}, {'x', Operation::EXIT}};
 
 /**
  * @brief: Información del jugador
@@ -74,6 +76,11 @@ private:
      * @brief: Muestra el banner de bienvenida
      */
     void showBanner();
+
+    /**
+     * @brief: Muestra el menu principal
+     */
+    void showMenu();
 
     /**
      * @brief: Limpia la pantalla antes de mostrar el menú

@@ -21,12 +21,12 @@ int main()
 
     auto engine = std::make_unique<Engine>();
 
-    std::cout << "Cargando: ";
+    std::cout << "Cargando";
 
     for (int i = 0; i <= 100; i += 10)
     {
         std::cout << "[" << i << "%]" << std::flush;
-        std::this_thread::sleep_for(std::chrono::milliseconds(300));
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
         if (i < 100)
         {
             std::cout << "\b\b\b\b\b" << std::flush;

@@ -11,6 +11,7 @@
 #define ENTIDADGENERICA_HPP
 
 #include <string>
+#include <utility>
 
 /**
  * @brief Define los elementos en común para los entes del board
@@ -21,11 +22,24 @@ protected:
     std::string m_name;
 
 public:
-    EntidadGenerica(const std::string& name)
-        : m_name(name)
+    /**
+        * @brief Constructor de la clase
+        * @param name Nombre del ente
+        * @note Se usa explicit para evitar conversiones implícitas , esto es, que el compilador no pueda convertir un
+    tipo de dato a otro. Es una buena práctica y ayuda a evitar errores. Además, de que se usa std::move para mover el
+    contenido de name a m_name así se evita copiar el contenido de name.
+     */
+    explicit EntidadGenerica(std::string name)
+        : m_name(std::move(name))
     {
     }
-    virtual ~EntidadGenerica() {}
+    /**
+     * @brief Destructor virtual de la clase
+     * @note Se usa virtual para que el compilador sepa que debe llamar al destructor de la clase hija, si no se usa
+     * virtual, el compilador llamará al destructor de la clase padre. Se usa default para que el compilador genere
+     * el destructor por defecto.
+     */
+    virtual ~EntidadGenerica() = default;
 
     /**
      * @brief Muestra la información del ente. Mostrando el nombre y otros atributos

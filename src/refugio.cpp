@@ -23,21 +23,21 @@ void Refugio::showInfo() const
 
 void Refugio::doAction() const
 {
-    std::runtime_error("Not implemented yet");
+    throw std::runtime_error("Not implemented yet");
 }
 
 void Refugio::addRefugee(const std::string& refugee)
 {
-    std::runtime_error("Not implemented yet");
+    throw std::runtime_error("Not implemented yet");
 }
 
 void Refugio::addResource(const std::string& resource, float amount)
 {
-    std::runtime_error("Not implemented yet");
+    throw std::runtime_error("Not implemented yet");
 }
 
 bool Refugio::consumeResource(const std::string& resource, float amount)
 {
-    std::runtime_error("Not implemented yet");
+    throw std::runtime_error("Not implemented yet");
     return false;
 }

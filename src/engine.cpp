@@ -22,14 +22,96 @@ void Engine::initEntities()
 
 void Engine::showBanner()
 {
-    std::cout << GREEN << "============================" << RESET << std::endl;
-    std::cout << GREEN << "       SISTEMA REFUGIO 33   " << RESET << std::endl;
-    std::cout << GREEN << "============================" << RESET << std::endl;
-    std::cout << WHITE << "\t\t\t\tLíder: " << m_player.name << " / Lvl: " << m_player.level << RESET << std::endl;
-    std::cout << GREEN << "Comandos disponibles:" << RESET << std::endl;
-    std::cout << GREEN << " - show board   : Mostrar tablero" << RESET << std::endl;
-    std::cout << GREEN << " - show details : Mostrar detalles de un elemento" << RESET << std::endl;
-    std::cout << GREEN << " - exit         : Salir del juego" << RESET << std::endl;
+    std::cout << GREEN
+              << "         :---.  .---..---.   :--:..---..---..:------:.  . :-------.:-----:    .-+=.              "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "          :@@@-  =@@%.*@@@+   *@@#.:%@@-.@@@-.%@@@@@@%. .  =@@@@@@@:*@@@@@+  =@@@@@*             "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "           +@@%..@@@=:%@@@@.  *@@#.:%@@-.@@@-.::#@@%::.    .:=@@@::.*@@%::..*@@@+::: .           "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "           :@@@==@@%.=@@@@@=  *@@#.:%@@-.@@@-   #@@#........ -@@@.  *@@%::.-@@@-               . "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "           .*@@%%@@=.%@@+@@%. *@@#.:%@@-.@@@-   #@@#.-@@@@@* -@@@.  *@@@@@:=@@@.                 "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "            .@@@@@%.-@@%.@@@- *@@#.:%@@-.@@@- . #@@#.:+++++- -@@@.  *@@%==.-@@@:                 "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "             =@@@@-.#@@@@@@@* *@@%.:@@@-.@@@-...#@@#.        -@@@.  *@@%....#@@@-...             "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "             .%@@%.:@@@:.-@@@:-@@@@@@@@..@@@@@@-#@@#.  .     -@@@.  *@@@@@* .*@@@@@*             "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "             .=##=.=##+  .*##+..+%@@%=. .######:+##*.   .    :###.  =#####=  ..-#@%=        .    "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "  .                                                             .      .                          "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "           .           ..               ..-+%@@@@@@%+-..                       .                  "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "  .                          .        .=@@@@@@@@@@@@@@@@=.     .           . .      .             "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "           . .                    ...*@@@@%-:.   ..:-%@@@@*.                                      "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "                .-*@@@@@@@@@@@@@@@@@@@@@=.       .    .=@@@@@@@@@@@@@@@@@@@@@*-..             .   "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "                .-%@@@@@@@@@@@@@@@@@@@#.    .-*##*-.  . .#@@@@@@@@@@@@@@@@@@@%-.         ..       "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "                   ..............:@@@+.   :%@@@@@@@@%:   .+@@@:..............                     "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "        .          .          . .#@@%. ..=@@@@@@@@@@@@=.  .%@@*.      .              .     .      "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "   .:+%@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+   :@@@@@@@@@@@@@%: . *@@@@@@@@@@@@@@@@@@@@@@@@@@@@@%+:..   ."
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "  .*@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+   :@@@@@@@@@@@@@@: . +@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@*.    "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "    ..:-+++++++++++++++++++++++++@@@*.  .%@@@@@@@@@@@@%.  .#@@@+++++++++++++++++++++++++-:..      "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << " .                              .+@@@:  ..%@@@@@@@@@@%..  :@@@+                                   "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "      .          .:=*%@@@@@@@@@@@@@@@%.   .=%@@@@@@%-.   .@@@@@@@@@@@@@@@@%*-..                   "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "       .        :%@@@@@@@@@@@@@@@@@@@@@-   .            -@@@@@@@@@@@@@@@@@@@@@%:                  "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "                  .:=*###############@@@@=.          .=@@@@###############*-:.           .        "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "      .            ..                :#@@@@@#+=--=+#@@@@@#.                  .                    "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "            .                .         .=%@@@@@@@@@@@@%=.                                         "
+              << RESET << std::endl;
+    std::cout << GREEN
+              << "                  . .               ..    ...-=++=:...                   .                        "
+              << RESET << std::endl;
+}
+
+void Engine::showMenu()
+{
+    std::cout << YELLOW << "\tLíder: " << m_player.name << " / Lvl: " << m_player.level << RESET << std::endl;
+    std::cout << GREEN << "Menú principal" << RESET << std::endl;
+    std::cout << GREEN << "<> [d] Mostrar detalles" << RESET << std::endl;
+    std::cout << GREEN << "<> [b] Mostrar tablero" << RESET << std::endl;
+    std::cout << GREEN << "<> [x] Salir" << RESET << std::endl;
     std::cout << GREEN << "=================================" << RESET << std::endl;
 }
 
@@ -45,27 +127,34 @@ void Engine::interactiveConsole()
     {
         clearScreen();
         showBanner();
+        showMenu();
         std::string input;
         std::cout << GREEN << "> " << RESET;
         std::cin >> input;
 
-        if (input == "board")
+        if (validOperations.find(input[0]) != validOperations.end())
         {
-            std::cout << GREEN << "Mostrando tablero..." << RESET << std::endl;
-        }
-        else if (input == "details")
-        {
-            std::cout << GREEN << "Mostrando detalles..." << RESET << std::endl;
-        }
-        else if (input == "exit")
-        {
-            std::cout << GREEN << "Saliendo del juego..." << RESET << std::endl;
-            keepRunning = false;
+            switch (validOperations.at(input[0]))
+            {
+                case Operation::SHOW_DETAILS:
+                    std::cout << "Mostrando detalles..." << std::endl;
+                    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                    break;
+                case Operation::SHOW_BOARD:
+                    std::cout << "Mostrando tablero..." << std::endl;
+                    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                    break;
+                case Operation::EXIT:
+                    std::cout << "Saliendo..." << std::endl;
+                    keepRunning = false;
+                    break;
+                default: std::cout << "Operación desconocida" << std::endl; break;
+            }
         }
         else
         {
-            std::cout << GREEN << "Operación desconocida. Inténtalo de nuevo." << RESET << std::endl;
+            std::cout << "Operación desconocida" << std::endl;
         }
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
-    clearScreen();
 }
