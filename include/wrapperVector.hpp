@@ -29,7 +29,7 @@ private:
     {
         auto newCapacity = (m_capacity == 0) ? INIT_CAPACITY : m_capacity * 2;
 
-        TData* newData = new TData[m_capacity];
+        TData* newData = new TData[newCapacity]; //Acá cambié la vieja capacidad por la nueva.
 
         for (size_t i = 0; i < m_size; i++)
         {
@@ -38,6 +38,7 @@ private:
 
         delete[] m_data;
         m_data = newData;
+        m_capacity = newCapacity; //faltaba asignar la capacidad del vector por la nueva.
     }
 
 public:

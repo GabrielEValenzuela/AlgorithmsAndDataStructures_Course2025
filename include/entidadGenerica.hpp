@@ -7,6 +7,7 @@
 // - Personaje
 // - Enemigos (gohuls)
 // - Otro elemento a definir
+
 #ifndef ENTIDADGENERICA_HPP
 #define ENTIDADGENERICA_HPP
 
