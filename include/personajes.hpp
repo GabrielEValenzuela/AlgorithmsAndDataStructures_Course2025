@@ -2,7 +2,6 @@
 // Created by ignac on 3/23/2025.
 //
 
-#endif //PERSONAJES_HPP
 #ifndef PERSONAJES_HPP
 #define PERSONAJES_HPP
 
