@@ -3,6 +3,10 @@
 #include <thread>
 
 #include "engine.hpp"
+#include "wrapperVector.hpp"
+#include "refugio.hpp"
+#include "personaje.h"
+#include "enemigo.h"
 
 int main()
 {
@@ -36,5 +40,7 @@ int main()
     std::cout << std::endl;
     std::cout << "Sistema de control 'Refugio 33' iniciado correctamente" << std::endl;
     engine->start(player);
+
+
     return 0;
 }

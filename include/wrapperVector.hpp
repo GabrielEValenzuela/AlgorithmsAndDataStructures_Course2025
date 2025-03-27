@@ -29,7 +29,7 @@ private:
     {
         auto newCapacity = (m_capacity == 0) ? INIT_CAPACITY : m_capacity * 2;
 
-        TData* newData = new TData[m_capacity];
+        TData* newData = new TData[newCapacity];
 
         for (size_t i = 0; i < m_size; i++)
         {
@@ -38,6 +38,7 @@ private:
 
         delete[] m_data;
         m_data = newData;
+        m_capacity = newCapacity;
     }
 
 public:
@@ -73,6 +74,44 @@ public:
     }
 
     /**
+     * @brief: Eliminar un elemento del vector por el par std::pair
+     */
+    void remove_at(const std::pair<std::string, float>& data)
+    {
+        for (size_t i = 0; i < m_size; i++)
+        {
+            if (data == m_data[i])
+            {
+                for (size_t j = i; j < m_size - 1; j++)
+                {
+                    m_data[j] = std::move(m_data[j + 1]);
+                }
+                m_size--;
+                break;
+            }
+        }
+    }
+
+    /**
+     * @brief: Eliminar un elemento del vector solo por std::string
+     */
+    void remove_at(const std::string& key)
+    {
+        for (size_t i = 0; i < size(); i++)
+        {
+            if (key == m_data[i].first)
+            {
+                for (size_t j = i; j < m_size - 1; j++)
+                {
+                    m_data[j] = std::move(m_data[j + 1]);
+                }
+                m_size--;
+                break;
+            }
+        }
+    }
+
+    /**
      * @brief: Agregar un elemento al final del vector. Usamos el operador de
      * mover, para evitar copias.
      */
@@ -84,6 +123,15 @@ public:
         }
 
         m_data[m_size++] = std::move(data);
+    }
+
+    bool empty()
+    {
+        if (size() == 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -103,7 +151,7 @@ public:
     }
 
     /**
-     * @brief: Obtener un elemento del vector
+     * @brief: Obtener un elemento del vector (modificable  Ej: m_resources[i] )
      */
     TData& operator[](size_t index)
     {
@@ -111,7 +159,7 @@ public:
     }
 
     /**
-     * @brief: Obtener un elemento del vector
+     * @brief: Obtener un elemento del vector (solo lectura   Ej: m_resources.at(i) )
      */
     const TData& at(size_t index) const
     {

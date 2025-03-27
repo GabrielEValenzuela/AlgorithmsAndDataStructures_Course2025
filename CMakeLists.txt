@@ -9,7 +9,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 file(GLOB_RECURSE SRC_FILES "${CMAKE_SOURCE_DIR}/src/*.cpp")
 
 # Define el ejecutable y sus archivos fuente
-add_executable(${CMAKE_PROJECT_NAME} ${SRC_FILES})
+add_executable(${CMAKE_PROJECT_NAME} ${SRC_FILES}
+        src/personaje.cpp
+        include/personaje.h
+        src/enemigo.cpp
+        include/enemigo.h
+        src/artefactoUnico.cpp
+        include/artefactoUnico.h
+)
 
 # Establece el directorio de inclusión para los archivos de cabecera usando target_include_directories
  target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/include")

@@ -21,9 +21,7 @@ protected:
     std::string m_name;
 
 public:
-    EntidadGenerica(const std::string& name)
-        : m_name(name)
-    {
+    EntidadGenerica(const std::string& name): m_name(name){
     }
     virtual ~EntidadGenerica() {}
 
