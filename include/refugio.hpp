@@ -57,6 +57,13 @@ public:
     void addRefugee(const std::string& refugee);
 
     /**
+     *@brief Verifica que el recurso exista
+     *@param resource Nombre del recurso
+     *@return index(i) si el recurso esta entre los recursos, 0 si el recurso no esta entre los recursos
+     */
+    size_t verifyResource(const std::string& resource);
+
+    /**
      * @brief Agrega un recurso al refugio
      * @param resource Nombre del recurso
      * @param amount Cantidad del recurso
