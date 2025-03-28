@@ -22,6 +22,7 @@ El proyecto está desarrollado en **C++** y utilizará:
 
 ### **📌 Estructuras de Datos y Algoritmos**
 ✅ **Punteros e Iteradores** → Manejo eficiente de memoria y estructuras dinámicas.
+✅ **POO** → Usando buenas prácticas.
 
 
 ### **📌 Herramientas**
@@ -36,6 +37,7 @@ El proyecto está desarrollado en **C++** y utilizará:
 | Semana | Tema | Implementación |
 |--------|------|---------------|
 | **1**  | 📌 **Punteros e Iteradores** | Implementación de `VectorFallout` para gestión de inventario. |
+| **2**  | 📌 **Herencia y polimorfismo** | Implementación de `entidadGenerica` y derivados para simular personajes. |
 
 ---
 

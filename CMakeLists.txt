@@ -12,7 +12,8 @@ file(GLOB_RECURSE SRC_FILES "${CMAKE_SOURCE_DIR}/src/*.cpp")
 add_executable(${CMAKE_PROJECT_NAME} ${SRC_FILES})
 
 # Establece el directorio de inclusión para los archivos de cabecera usando target_include_directories
- target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/include")
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/include")
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_SOURCE_DIR}/include/dataStructures")
 
 # Mensaje para indicar el inicio de la compilación
 message(STATUS "Compilando el proyecto ${CMAKE_PROJECT_NAME}")

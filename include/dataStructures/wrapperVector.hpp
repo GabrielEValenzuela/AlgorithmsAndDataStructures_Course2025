@@ -5,6 +5,10 @@
 #ifndef WRAPPERVECTOR_HPP
 #define WRAPPERVECTOR_HPP
 
+#include <cstddef>
+#include <utility>
+#include <algorithm>
+
 auto constexpr INIT_CAPACITY {100}; //< Capacidad inicial del vector
 
 /**
@@ -38,7 +42,6 @@ private:
 
         delete[] m_data;
         m_data = newData;
-        m_capacity = newCapacity;
     }
 
 public:
@@ -132,16 +135,18 @@ public:
 
     /**
      * @brief: Obtener el tamaño del vector
+     * @note: [[nodiscard]] es un atributo que indica que el valor de retorno de la función no debe ser ignorado.
      */
-    size_t size() const
+    [[nodiscard]] size_t size() const
     {
         return m_size;
     }
 
     /**
      * @brief: Obtener la capacidad del vector
+     * @note: [[nodiscard]] es un atributo que indica que el valor de retorno de la función no debe ser ignorado.
      */
-    size_t capacity() const
+    [[nodiscard]] size_t capacity() const
     {
         return m_capacity;
     }
@@ -164,8 +169,9 @@ public:
 
     /**
      * @brief: Realiza un swap de los datos de dos vectores
+     * @note: noexcept es una especificación que indica que la función no lanzará excepciones.
      */
-    void swap(wrapperVector& other)
+    void swap(wrapperVector& other) noexcept
     {
         std::swap(m_data, other.m_data);
         std::swap(m_size, other.m_size);

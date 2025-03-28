@@ -1,12 +1,12 @@
 #ifndef ENGINE_HPP
 #define ENGINE_HPP
 
+#include "randomEventGenerator.hpp"
 #include <chrono>
 #include <iostream>
-#include <limits>
-#include <string>
 #include <string_view>
 #include <thread>
+#include <unordered_map>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -33,6 +33,9 @@ enum class Operation
     EXIT,         //< Salir del juego
     UNKNOWN       //< Operación desconocida
 };
+
+const std::unordered_map<char, Operation> validOperations = {
+    {'d', Operation::SHOW_DETAILS}, {'b', Operation::SHOW_BOARD}, {'x', Operation::EXIT}};
 
 /**
  * @brief: Información del jugador
@@ -76,11 +79,17 @@ private:
     void showBanner();
 
     /**
+     * @brief: Muestra el menu principal
+     */
+    void showMenu();
+
+    /**
      * @brief: Limpia la pantalla antes de mostrar el menú
      */
     void clearScreen();
 
-    PlayerInfo m_player; //< Información del jugador
+    PlayerInfo m_player;                    //< Información del jugador
+    RandomEventGenerator m_randomGenerator; //< Generador de eventos aleatorios
 };
 
 #endif // ENGINE_HPP
