@@ -29,10 +29,7 @@ public:
     tipo de dato a otro. Es una buena práctica y ayuda a evitar errores. Además, de que se usa std::move para mover el
     contenido de name a m_name así se evita copiar el contenido de name.
      */
-    explicit EntidadGenerica(std::string name)
-        : m_name(std::move(name))
-    {
-    }
+    explicit EntidadGenerica(std::string name): m_name(std::move(name)) {};
     /**
      * @brief Destructor virtual de la clase
      * @note Se usa virtual para que el compilador sepa que debe llamar al destructor de la clase hija, si no se usa
