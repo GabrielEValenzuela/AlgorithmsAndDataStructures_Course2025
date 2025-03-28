@@ -79,6 +79,7 @@ wrapperVector<std::pair<std::string, float>> Enemigo::lootObject(const std::stri
             std::cout << "Solo hay " << m_loot.at(index).second << " de " << object << ". Tomandolo todo" << std::endl;
             lootedObject.push_back(std::make_pair(object, m_loot[index].second));
             m_loot[index].second = 0;
+            // eliminar el objeto del wrappervector m_loot
         }
     }
     else

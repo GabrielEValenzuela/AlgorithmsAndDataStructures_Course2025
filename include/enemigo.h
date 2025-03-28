@@ -35,7 +35,7 @@ public:
     /**
     * @brief Verifica si un objeto existe en el loot
     * @param object Nombre del objeto
-    * @return i(indice) del objeto si se encontro, 0 si el objeto no se encontro
+    * @return i(indice) del objeto si se encontro, -1 si el objeto no se encontro
     */
     size_t verifyObject(const std::string& object);
 

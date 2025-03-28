@@ -127,11 +127,7 @@ public:
 
     bool empty()
     {
-        if (size() == 0)
-        {
-            return true;
-        }
-        return false;
+        return size() == 0;
     }
 
     /**
