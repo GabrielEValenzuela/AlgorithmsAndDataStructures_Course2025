@@ -29,8 +29,7 @@ public:
     tipo de dato a otro. Es una buena práctica y ayuda a evitar errores. Además, de que se usa std::move para mover el
     contenido de name a m_name así se evita copiar el contenido de name.
      */
-    explicit EntidadGenerica(std::string name)
-        : m_name(std::move(name))
+    explicit EntidadGenerica(std::string name) : m_name(std::move(name))
     {
     }
     /**

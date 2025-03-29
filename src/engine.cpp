@@ -1,7 +1,6 @@
 #include "engine.hpp"
 
-void Engine::start(const PlayerInfo& player)
-{
+void Engine::start(const PlayerInfo& player){
     m_player = player;
     m_randomGenerator = RandomEventGenerator();
     initResources();

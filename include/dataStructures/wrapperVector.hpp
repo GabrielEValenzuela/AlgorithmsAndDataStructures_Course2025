@@ -48,12 +48,7 @@ public:
     /**
      * @brief: Constructor por defecto
      */
-    wrapperVector()
-        : m_data {nullptr}
-        , m_size {0}
-        , m_capacity {0}
-    {
-    }
+    wrapperVector(): m_data(nullptr), m_size(0) , m_capacity(0){}
 
     /**
      * @brief: Destructor

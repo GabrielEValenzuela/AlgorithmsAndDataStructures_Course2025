@@ -1,11 +1,6 @@
 #include "refugio.hpp"
 
-Refugio::Refugio(const std::string& name, float defense, float attack)
-    : EntidadGenerica(name)
-    , m_defense(defense)
-    , m_attack(attack)
-{
-}
+Refugio::Refugio(const std::string& name, float defense, float attack): EntidadGenerica(name), m_defense(defense), m_attack(attack){}
 
 void Refugio::showInfo() const
 {

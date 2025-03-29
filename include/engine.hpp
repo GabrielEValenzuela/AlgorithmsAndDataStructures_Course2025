@@ -42,8 +42,8 @@ const std::unordered_map<char, Operation> validOperations = {
  */
 struct PlayerInfo
 {
-    std::string_view name;
-    std::string_view level;
+    std::string name; //4ta correcion: std no tiene string_view, solo string.
+    std::string level;
 };
 
 /**
