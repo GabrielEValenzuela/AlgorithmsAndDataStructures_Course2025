@@ -1,6 +1,7 @@
 #include "engine.hpp"
 
 #include <fstream>
+#include <functional>
 
 void Engine::start()
 {
@@ -148,7 +149,30 @@ void Engine::interactiveConsole()
             {
                 case Operation::SHOW_STATUS:
                     std::cout << "Mostrando detalles..." << std::endl;
-                    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+                    m_shelter->showInfo();
+                    break;
+                case Operation::CHECK_EVENT:
+                    std::lock_guard<std::mutex> lock(m_eventMutex);
+
+                    if (m_eventQueue.empty())
+                    {
+                        std::cout << YELLOW << "[INFO] No hay eventos pendientes.\n" << RESET;
+                        return;
+                    }
+
+                    int idx = 1;
+                    while (!m_eventQueue.empty())
+                    {
+                        std::visit(
+                            [&idx](auto&& npc)
+                            {
+                                std::cout << "Evento #" << idx++ << ": ";
+                                npc.showInfo();
+                            },
+                            m_eventQueue.front());
+
+                        m_eventQueue.pop();
+                    }
                     break;
                 case Operation::EXIT:
                     std::cout << "Saliendo..." << std::endl;
@@ -161,7 +185,8 @@ void Engine::interactiveConsole()
         {
             std::cout << "Operación desconocida" << std::endl;
         }
-        clearScreen();
+        std::cin.ignore();
+        std::cin.get();
     }
 }
 
@@ -389,4 +414,145 @@ visitantsRate=0.10
     }
 
     std::cout << GREEN << "[SUCCESS] Configuración cargada correctamente desde el servidor de VAULT\n" << RESET;
+}
+
+void Engine::newEvent()
+{
+    m_runningEvents = true;
+    double intervalSeconds = 1.0 / m_gameConfig.events.eventsPerSecond;
+
+    m_eventThread = std::thread(
+        [this, intervalSeconds]()
+        {
+            while (m_runningEvents)
+            {
+                // Wrapper con pesos
+                wrapperVector<NPC::VisitantChance> visitants;
+                visitants.push_back({NPC::VisitantCategory::REFUGEE, m_gameConfig.events.rateRefugee});
+                visitants.push_back({NPC::VisitantCategory::BROTHER, m_gameConfig.events.rateBrother});
+                visitants.push_back({NPC::VisitantCategory::ENEMY, m_gameConfig.events.rateEnemy});
+                visitants.push_back({NPC::VisitantCategory::MERCHANT, m_gameConfig.events.rateCommerce});
+                visitants.push_back({NPC::VisitantCategory::CARAVAN, m_gameConfig.events.rateCaravane});
+
+                // Cálculo total de peso
+                double totalWeight = 0.0;
+                for (const auto& v : visitants) totalWeight += v.weight;
+
+                double roll = m_randomGenerator.getFloat(0.0f, static_cast<float>(totalWeight));
+                double cumulative = 0.0;
+
+                for (const auto& v : visitants)
+                {
+                    cumulative += v.weight;
+                    if (roll <= cumulative)
+                    {
+                        EngineData::Faction faccion;
+
+                        switch (v.type)
+                        {
+                            case NPC::VisitantCategory::REFUGEE: faccion = EngineData::Faction::REFUGEES; break;
+                            case NPC::VisitantCategory::BROTHER: faccion = EngineData::Faction::STEEL_BROTHERS; break;
+                            case NPC::VisitantCategory::ENEMY:
+                            {
+                                std::vector<EngineData::Faction> enemigos = {EngineData::Faction::RAIDERS,
+                                                                             EngineData::Faction::LOOTERS,
+                                                                             EngineData::Faction::MUTANTS,
+                                                                             EngineData::Faction::GHOULS,
+                                                                             EngineData::Faction::ENCLAVE};
+                                faccion = m_randomGenerator.randomChoice(enemigos);
+                                break;
+                            }
+                            case NPC::VisitantCategory::MERCHANT:
+                            {
+                                std::vector<EngineData::Faction> comerciantes = {EngineData::Faction::MERCHANTS,
+                                                                                 EngineData::Faction::WATER_MERCHANTS};
+                                faccion = m_randomGenerator.randomChoice(comerciantes);
+                                break;
+                            }
+                            case NPC::VisitantCategory::CARAVAN: faccion = EngineData::Faction::CARAVAN; break;
+                        }
+
+                        auto npc = newCharacter(faccion);
+
+                        {
+                            std::lock_guard<std::mutex> lock(m_eventMutex);
+                            m_eventQueue.push(std::move(npc));
+                        }
+
+                        std::cout << GREEN << "[INFO] Se ha generado un nuevo visitante: " << factionToString(faccion)
+                                  << RESET << std::endl;
+
+                        m_eventCv.notify_one();
+                        break;
+                    }
+                }
+
+                std::this_thread::sleep_for(std::chrono::duration<double>(intervalSeconds));
+            }
+        });
+}
+
+EngineData::VisitanteVariant Engine::newCharacter(EngineData::Faction faction)
+{
+    using namespace EngineData;
+
+    static const std::unordered_map<Faction, std::function<VisitanteVariant()>> factory {
+        {Faction::REFUGEES,
+         []
+         {
+             return Refugiado("Refugiado");
+         }},
+        {Faction::STEEL_BROTHERS,
+         []
+         {
+             return HermanoAcero("Hermano de Acero");
+         }},
+        {Faction::RAIDERS,
+         []
+         {
+             return Asaltante("Asaltante");
+         }},
+        {Faction::LOOTERS,
+         []
+         {
+             return Saqueador("Saqueador");
+         }},
+        {Faction::ENCLAVE,
+         []
+         {
+             return Enclave("Enclave");
+         }},
+        {Faction::MUTANTS,
+         []
+         {
+             return Mutante("Mutante");
+         }},
+        {Faction::MERCHANTS,
+         []
+         {
+             return Mercader("Mercader", false);
+         }},
+        {Faction::WATER_MERCHANTS,
+         []
+         {
+             return MercaderAgua("Mercader de Agua");
+         }},
+        {Faction::CARAVAN,
+         []
+         {
+             return Caravana("Caravana");
+         }},
+        {Faction::GHOULS,
+         []
+         {
+             return Ghoul("Ghoul");
+         }}};
+
+    auto it = factory.find(faction);
+    if (it != factory.end())
+    {
+        return it->second();
+    }
+
+    throw std::runtime_error("Facción desconocida para generar personaje");
 }

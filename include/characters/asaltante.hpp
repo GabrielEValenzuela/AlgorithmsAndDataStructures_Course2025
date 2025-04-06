@@ -1,18 +1,18 @@
-#ifndef RAIDER_HPP
-#define RAIDER_HPP
+#ifndef ASALTANTE_HPP
+#define ASALTANTE_HPP
 
 #include "entidadGenerica.hpp"
 #include <iostream>
 #include <random>
 
 /**
- * @class Raider
+ * @class Asaltante
  * @brief Representa una banda de asaltantes en el Yermo.
  *
  * Los Raiders suelen operar en grupos armados y bien organizados. Atacan para saquear,
  * pero en ocasiones pueden rendirse y pedir asilo si las cosas no salen como esperaban.
  */
-class Raider : public EntidadGenerica
+class Asaltante : public EntidadGenerica
 {
 private:
     int m_integrantes; ///< Cantidad de miembros en la banda
@@ -25,7 +25,7 @@ public:
      * @brief Constructor
      * @param nombre Nombre del grupo raider
      */
-    explicit Raider(const std::string& nombre)
+    explicit Asaltante(const std::string& nombre)
         : EntidadGenerica(nombre)
         , m_integrantes(generarCantidad())
         , m_poderFuego(generarPoder())
@@ -39,7 +39,7 @@ public:
      */
     void showInfo() const override
     {
-        std::cout << "🔫 RAIDERS: " << m_name << "\n"
+        std::cout << "🔫 Asaltantes: '" << m_name << "'\n"
                   << " - Miembros: " << m_integrantes << "\n"
                   << " - Poder de fuego: " << m_poderFuego << "\n"
                   << " - ¿Rendidos?: " << (m_rendidos ? "Sí" : "No") << "\n"
@@ -114,4 +114,4 @@ private:
     }
 };
 
-#endif // RAIDER_HPP
+#endif // ASALTANTE_HPP

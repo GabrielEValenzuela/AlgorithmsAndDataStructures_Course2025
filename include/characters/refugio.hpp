@@ -1,14 +1,17 @@
 #ifndef REFUGIO_HPP
 #define REFUGIO_HPP
 
-#include "engine.hpp"
-#include "engineData.hpp"
-#include "entidadGenerica.hpp"
-#include "list.hpp"
-#include "wrapperVector.hpp"
+
 #include <iostream>
 #include <string>
 #include <utility>
+
+#include "engine.hpp"
+#include "engineData.hpp"
+#include "entidadGenerica.hpp"
+#include "characters/chracterVisitant.hpp"
+#include "list.hpp"
+#include "wrapperVector.hpp"
 
 /**
  * @class Refugio
@@ -20,28 +23,17 @@
 class Refugio : public EntidadGenerica
 {
 
-    /**
-     * @struct Visitante
-     * @brief Representa un visitante del refugio
-     *
-     * Contiene el nombre y la facción del visitante.
-     */
-    struct Visitante
-    {
-        std::string nombre;
-        EngineData::Faction faccion;
-    };
-
 private:
     double m_defense;                                         ///< Nivel de defensa del refugio
     double m_attack;                                          ///< Capacidad de ataque del refugio
-    wrapperVector<std::string> m_refugees;                    ///< Lista de moradores dentro del refugio
+    uint64_t m_maxCapacity {10}; ///< Maxima capacidad del refugio, determinado por el nivel del jugador
+    wrapperVector<Refugiado> m_refugees;                    ///< Lista de moradores dentro del refugio
     wrapperVector<std::pair<std::string, float>> m_resources; ///< Lista de recursos con su cantidad
-    DoublyLinkedList<Visitante>* m_visitants;                 ///< Lista de visitantes registrados
+    DoublyLinkedList<VisitanteVariant>* m_visitants;                 ///< Lista de visitantes registrados
 
     std::string m_leader; ///< Nombre del líder del refugio
 
-    void printRecursive(DoublyListNode<Visitante>* mNode);
+    void printRecursive(DoublyListNode<VisitanteVariant>* mNode);
 
     /**
      * @brief Devuelve la faccion en formato de string para su impresion.

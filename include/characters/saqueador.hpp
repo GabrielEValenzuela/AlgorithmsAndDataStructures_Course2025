@@ -2,8 +2,15 @@
 #define SAQUEADOR_HPP
 
 #include "entidadGenerica.hpp"
+#include <cstdint>
 #include <iostream>
-#include <random>
+
+enum class Estilo : uint8_t
+{
+    AGRESIVO,
+    SIGILOSO,
+    OPORTUNISTA
+};
 
 /**
  * @class Saqueador
@@ -14,14 +21,6 @@
  */
 class Saqueador : public EntidadGenerica
 {
-public:
-    enum class Estilo
-    {
-        AGRESIVO,
-        SIGILOSO,
-        OPORTUNISTA
-    };
-
 private:
     int m_numMiembros; ///< Número de integrantes del grupo
     Estilo m_estilo;   ///< Estilo de saqueo del grupo
@@ -31,11 +30,12 @@ public:
      * @brief Constructor del saqueador
      * @param nombre Nombre del grupo de saqueadores
      * @param estilo Estilo de comportamiento del grupo
+     * @param numMiembros Número de miembros del grupo
      */
-    Saqueador(const std::string& nombre, Estilo estilo)
+    Saqueador(const std::string& nombre, Estilo estilo, int numMiembros)
         : EntidadGenerica(nombre)
+        , m_numMiembros(numMiembros)
         , m_estilo(estilo)
-        , m_numMiembros(randomGroupSize())
     {
     }
 
@@ -45,7 +45,7 @@ public:
     void showInfo() const override
     {
         std::cout << "💀 Saqueadores: " << m_name << "\n"
-                  << " - Estilo: " << estiloToString(m_estilo) << "\n"
+                  << " - Estilo: " << (uint8_t)m_estilo << "\n"
                   << " - Miembros: " << m_numMiembros << "\n";
     }
 
@@ -65,32 +65,6 @@ public:
             case Estilo::OPORTUNISTA:
                 std::cout << "💬" << m_name << " >>> Solo estamos aquí por lo que sobra... si queda algo." << std::endl;
                 break;
-        }
-    }
-
-private:
-    /**
-     * @brief Devuelve una cantidad aleatoria de miembros entre 5 y 10
-     */
-    int randomGroupSize() const
-    {
-        static std::random_device rd;
-        static std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dist(5, 10);
-        return dist(gen);
-    }
-
-    /**
-     * @brief Convierte el enum de estilo a string
-     */
-    std::string estiloToString(Estilo estilo) const
-    {
-        switch (estilo)
-        {
-            case Estilo::AGRESIVO: return "Agresivo";
-            case Estilo::SIGILOSO: return "Sigiloso";
-            case Estilo::OPORTUNISTA: return "Oportunista";
-            default: return "Desconocido";
         }
     }
 };

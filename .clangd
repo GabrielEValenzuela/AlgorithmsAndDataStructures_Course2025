@@ -1,0 +1,39 @@
+CompileFlags:
+  Add: [-std=c++17, -Wall, -Wextra, -Wshadow, -Wnon-virtual-dtor, -pedantic]
+  Remove: [-W*]
+  #Compiler: clang++
+  CompilationDatabase: Ancestors
+
+Diagnostics:
+  ClangTidy:
+    Add: [bugprone-*, readability-*, performance-*,cppcoreguidelines-*]
+    Remove: [clang-analyzer-alpha.*]
+    CheckOptions:
+      readability-identifier-naming.VariableCase: camelBack
+      readability-identifier-naming.ConstexprVariableCase: UPPER_CASE
+      readability-identifier-naming.ClassCase: CamelCase
+  UnusedIncludes: Strict
+  Suppress: []
+
+Index:
+  Background: Build
+  StandardLibrary: Yes
+
+Completion:
+  AllScopes: true
+
+Hover:
+  ShowAKA: true
+
+InlayHints:
+  Designators: true
+  Enabled: true
+  ParameterNames: true
+  DeducedTypes: true
+  BlockEnd: true
+  TypeNameLimit: 1000
+
+Style:
+  FullyQualifiedNamespaces:
+    - "std"
+

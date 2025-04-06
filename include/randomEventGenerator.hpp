@@ -45,7 +45,7 @@ public:
     /**
      * @brief Devuelve true con una probabilidad dada (0.0 a 1.0)
      */
-    bool chance(float probability)
+    bool chance(double probability)
     {
         std::bernoulli_distribution dist(probability);
         return dist(m_rng);

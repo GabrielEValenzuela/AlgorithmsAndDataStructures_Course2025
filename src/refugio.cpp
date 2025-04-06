@@ -14,7 +14,7 @@ void Refugio::showInfo() const
     std::cout << "👥 Moradores: ";
     for (int refugee = 0; refugee < m_refugees.size(); refugee++)
     {
-        std::cout << "\t - " << m_refugees.at(refugee) << std::endl;
+        m_refugees.at(refugee).showInfo();
     }
     std::cout << "\n";
     std::cout << "\t📦 Recursos: \n";
@@ -50,8 +50,6 @@ void Refugio::registerVisitant(const std::string& nombre, const EngineData::Fact
         return;
     }
 
-    Visitante nuevoVisitante {nombre, faccion};
-    m_visitants->push_front(nuevoVisitante);
     std::cout << "Visitante: " << nombre << " registrado existosamente en el refugio." << std::endl;
 }
 
@@ -61,7 +59,7 @@ void Refugio::showVisits()
     printRecursive(m_visitants->get_head());
 }
 
-void Refugio::printRecursive(DoublyListNode<Visitante>* mNode)
+void Refugio::printRecursive(DoublyListNode<VisitanteVariant>* mNode)
 {
     if (!mNode)
     {

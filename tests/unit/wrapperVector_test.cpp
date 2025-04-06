@@ -15,9 +15,11 @@ TEST(WrapperVectorTest, PushBackAndAccess)
 TEST(WrapperVectorTest, ResizeCorrectly)
 {
     wrapperVector<int> vec;
+    EXPECT_EQ(vec.size(), 0);
+    EXPECT_EQ(vec.capacity(), 0);
     for (int i = 0; i < 200; ++i) vec.push_back(i);
 
-    EXPECT_GE(vec.capacity(), 200);
+    EXPECT_EQ(vec.capacity(), 200);
     EXPECT_EQ(vec.size(), 200);
     EXPECT_EQ(vec[199], 199);
 }

@@ -26,7 +26,7 @@ public:
      * @param name Nombre del refugiado
      * @param isFromVault Indica si proviene de un Vault o de la superficie
      */
-    Refugiado(const std::string& name, bool isFromVault = false)
+    Refugiado(const std::string& name, bool isFromVault)
         : EntidadGenerica(name)
         , m_maxHealth(isFromVault ? 80 : 100)
         , m_supplies(0)
@@ -61,30 +61,6 @@ public:
             m_supplies = 0;
             std::cout << "💬" << m_name << " >>> No puedo quedarme sin recursos... buscaré otro lugar." << std::endl;
         }
-    }
-
-    /**
-     * @brief Intenta ingresar al refugio
-     * @param espacioDisponible Si hay lugar y recursos disponibles
-     */
-    void requestShelter(bool espacioDisponible)
-    {
-        if (espacioDisponible)
-        {
-            std::cout << "💬" << m_name << " >>> Gracias por recibirme en su refugio." << std::endl;
-        }
-        else
-        {
-            std::cout << "💬" << m_name << " >>> Entiendo, seguiré buscando un lugar donde quedarme..." << std::endl;
-        }
-    }
-
-    /**
-     * @brief Devuelve si es de un Vault
-     */
-    bool isFromVault() const
-    {
-        return m_isFromVault;
     }
 };
 

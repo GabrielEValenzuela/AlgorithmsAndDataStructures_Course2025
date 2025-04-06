@@ -1,16 +1,18 @@
 #ifndef ENGINE_HPP
 #define ENGINE_HPP
 
-#include "gameSerializer.hpp"
-#include "randomEventGenerator.hpp"
-#include "refugio.hpp"
-#include "engineData.hpp"
 #include <chrono>
+#include <condition_variable>
+#include <cstdint>
 #include <filesystem>
 #include <iostream>
+#include <queue>
 #include <string_view>
 #include <thread>
 #include <unordered_map>
+#include <variant>
+
+#include "engineData.hpp"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -33,12 +35,35 @@ auto constexpr CONSOLE_VERSION {"0.1.0"};          //< Versión de la consola
 
 class Refugio;
 
+using VisitanteVariant = std::variant<
+    Refugiado,
+    Mercader,
+    MercaderAgua,
+    Saqueador,
+    HermanoDeAcero,
+    Enclave,
+    Mutantes,
+    Asaltante,
+    Ghoul,
+    Caravan
+>;
+
 /**
  * @brief: Clase que inicializa el motor del juego
  */
 class Engine
 {
 public:
+    Engine() = default;
+    
+    ~Engine()
+    {
+        m_runningEvents = false;
+        if (m_eventThread.joinable())
+        {
+            m_eventThread.join();
+        }
+    }
     /**
      * @brief: Inicializa el motor del juego
      */
@@ -105,7 +130,7 @@ private:
     /**
      * @brief: Muestra el menu principal
      */
-    void showMenu();
+    static void showMenu();
 
     /**
      * @brief: Limpia la pantalla antes de mostrar el menú
@@ -122,15 +147,33 @@ private:
      */
     void loadConfig();
 
+    /**
+     * @brief Genera un nuevo evento
+     */
+    void newEvent();
+
+    /**
+     * @brief Factory de generacion de personajes
+     * @param faction La facción a crear
+     * @return Un nuevo NPC
+     */
+    VisitanteVariant newCharacter(EngineData::Faction faction);
+
     EngineData::PlayerInfo m_player;        //< Información del jugador
     RandomEventGenerator m_randomGenerator; //< Generador de eventos aleatorios
-    EngineData::GameConfig m_gameConfig;    //< Configuración del juego
+    EngineData::GameConfig m_gameConfig{};    //< Configuración del juego
     std::unique_ptr<Refugio> m_shelter;     //< Refugio del jugador
+    std::queue<EngineData::Faction> m_eventQueue;
+    std::mutex m_eventMutex;
+    std::condition_variable m_eventCv;
+    bool m_runningEvents = false;
+    std::thread m_eventThread;
+
 
     /**
      * @brief: Operaciones que puede realizar el jugador
      */
-    enum class Operation
+    enum class Operation : uint8_t
     {
         SHOW_STATUS, //< Muestra el estado actual del refugio
         SHOW_EVENTS, //< Muestra los eventos aleatorios
@@ -149,6 +192,29 @@ private:
                                                                    {'f', Operation::FIGHT},
                                                                    {'s', Operation::SAVE},
                                                                    {'q', Operation::EXIT}};
+
+    const std::vector<std::string> m_names = {
+        "Lucas", "Valentina", "Mateo",  "Camila",   "Santiago", "Julieta", "Benjamín", "Martina", "Joaquín", "Catalina",
+        "Tomás", "Emma",      "Franco", "Isabella", "Thiago",   "Renata",  "Ignacio",  "Mía",     "Bruno",   "Lola"};
+
+    const std::vector<std::string> m_surnames = {
+        "Fernández", "Gómez", "Rodríguez", "López",  "Martínez", "Pérez", "González", "Romero", "Sosa",   "Torres",
+        "Álvarez",   "Ruiz",  "Ramírez",   "Flores", "Acosta",   "Ortiz", "Silva",    "Molina", "Castro", "Núñez"};
+
+    const std::vector<std::string> m_groupsEnemys = {
+        "El Lince", "Cuchillo", "Sombra", "Rata",  "Machete", "El Tuerto", "Ruger",  "Veneno", "Kilo",    "Toro",
+        "Jaque",    "Hueso",    "Chispa", "Ruido", "Filo",    "El Ciego",  "Piedra", "Trapo",  "Garrote", "Ladrido"};
+
+    const std::vector<std::string> m_merchants = {"Don Eric",       "El turco",
+                                                  "El Sapo",        "Maese Gutiérrez",
+                                                  "Tito Ramires",   "Nina la audaz",
+                                                  "El foragido",    "Candelario",
+                                                  "Rubén el Viejo", "Salomé",
+                                                  "Don Atún",       "Capitán Fierro",
+                                                  "Manolo Bidón",   "Paco el Tranquilo",
+                                                  "Zulema",         "Yolanda",
+                                                  "Valerio",        "Iván de los Precios",
+                                                  "Florinda",       "Greta"};
 };
 
 #endif // ENGINE_HPP

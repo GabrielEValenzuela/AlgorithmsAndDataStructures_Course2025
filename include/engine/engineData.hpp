@@ -2,13 +2,14 @@
 #define ENGINEDATA_HPP
 
 #include <string_view>
+#include <cstdint>
 
 namespace EngineData
 {
     /**
      * @brief: Información de la facción
      */
-    enum class Faction
+    enum class Faction : uint8_t
     {
         WATER_MERCHANTS, //< Mercaderes de agua
         MERCHANTS,       //< Mercaderes
@@ -26,7 +27,7 @@ namespace EngineData
     /**
      * @brief: Información de los recursos
      */
-    enum class Resources
+    enum class Resources : uint8_t
     {
         FOOD,        //< Comida
         WATER,       //< Agua
@@ -43,7 +44,7 @@ namespace EngineData
     /**
      * @brief: Información del artefacto único
      */
-    enum class UniqueArtifactType
+    enum class UniqueArtifactType : uint8_t
     {
         WEAPON,     //< Arma
         ARMOR,      //< Armadura
@@ -51,6 +52,23 @@ namespace EngineData
         RELIC,      //< Reliquia
         TECHNOLOGY, //< Tecnología
     };
+
+    template<typename TData>
+    auto valueToString(const TData& value) -> std::string_view
+    {
+        if constexpr (std::is_same_v<TData, EngineData::Resources>)
+        {
+            return resourceToString(value);
+        }
+        else if constexpr (std::is_same_v<TData, EngineData::Faction>)
+        {
+            return factionToString(value);
+        }
+        else if constexpr (std::is_same_v<TData, EngineData::UniqueArtifactType>)
+        {
+            return uniqueArtifactTypeToString(value);
+        }
+    }
 
     /**
      * @brief: Información del jugador
@@ -102,6 +120,16 @@ namespace EngineData
             double attackFactor;
             double visitantsRate;
         } shelter;
+
+        struct Events
+        {
+            int eventsPerSecond;
+            double rateRefugee;
+            double rateBrother;
+            double rateEnemy;
+            double rateCommerce;
+            double rateCaravane;
+        } events;
     };
 
 } // namespace EngineData

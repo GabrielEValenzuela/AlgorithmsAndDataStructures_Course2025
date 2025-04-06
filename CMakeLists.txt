@@ -11,6 +11,8 @@ if(DEFINED ENV{VCPKG_ROOT})
         CACHE STRING "")
 endif()
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Recopila todos los archivos fuente dentro del directorio src
 file(GLOB_RECURSE SRC_FILES "${CMAKE_SOURCE_DIR}/src/*.cpp")
 
