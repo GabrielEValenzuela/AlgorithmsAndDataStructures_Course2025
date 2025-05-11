@@ -18,6 +18,7 @@ file(GLOB_RECURSE SRC_FILES "${CMAKE_SOURCE_DIR}/src/*.cpp")
 add_executable(${CMAKE_PROJECT_NAME} ${SRC_FILES}
         include/Personaje.h
         src/Enemigos.h
+        include/dataStructures/tree.h
 )
 
 # Establece el directorio de inclusión para los archivos de cabecera usando target_include_directories
