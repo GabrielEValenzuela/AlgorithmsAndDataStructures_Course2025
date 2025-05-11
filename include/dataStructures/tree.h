@@ -125,7 +125,7 @@ private:
 
     void buscar(Nodo* nodo, const T& decision)
     {
-        //Lo pongo para que pase la prueba, el publico ya hace todo
+        //Lo pongo para que pase la prueba, el publico ya hace tod0
     }
 
     void destruir(Nodo* nodo)
