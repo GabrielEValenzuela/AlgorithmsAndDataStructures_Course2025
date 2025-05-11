@@ -18,9 +18,9 @@ auto constexpr INIT_CAPACITY {100}; //< Capacidad inicial del vector
  * es genérico.
  */
 template<typename TData>
-class wrapperVector
-{
-private:
+class wrapperVector{
+
+    private:
     TData* m_data;     //< Puntero a los datos
     size_t m_size;     //< Cantidad de elementos en el vector
     size_t m_capacity; //< Capacidad del vector

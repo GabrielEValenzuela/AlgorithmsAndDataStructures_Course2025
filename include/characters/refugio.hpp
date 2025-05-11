@@ -39,7 +39,7 @@ private:
     wrapperVector<std::pair<std::string, float>> m_resources; ///< Lista de recursos con su cantidad
     DoublyLinkedList<Visitante>* m_visitants;                 ///< Lista de visitantes registrados
 
-    std::string m_leader; ///< Nombre del líder del refugio
+    std::string m_leader;                                     ///< Nombre del líder del refugio
 
     void printRecursive(DoublyListNode<Visitante>* mNode);
 

@@ -20,7 +20,7 @@ Stack<TData>::~Stack()
 template<typename TData>
 void Stack<TData>::push(const TData& value)
 {
-    auto* nuevo = Node(value);
+    auto* nuevo = Node<TData>(value);
     nuevo->next = m_top;
     m_top = nuevo;
 }
