@@ -51,7 +51,7 @@ namespace EngineData
         ARMOR,      //< Armadura
         VEHICLE,    //< Vehículo
         RELIC,      //< Reliquia
-        TECH, //< Tecnología
+        TECH,       //< Tecnología
     };
 
     /**
