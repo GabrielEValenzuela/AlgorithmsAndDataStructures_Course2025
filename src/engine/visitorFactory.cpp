@@ -1,5 +1,6 @@
 #include "engine/visitorFactory.hpp"
 #include "asaltante.hpp"
+#include "caravana.hpp"
 
 #include <functional>
 #include <unordered_map>
@@ -37,27 +38,34 @@ NPC::VisitanteVariant VisitorFactory::create(EngineData::Faction faction)
 {
     static const std::unordered_map<EngineData::Faction, std::function<NPC::VisitanteVariant(::VisitorFactory*)>>
         FACTORY_MAP = {
-            {EngineData::Faction::RAIDERS,
+            // {EngineData::Faction::RAIDERS,
+            //  [](VisitorFactory* self)
+            //  {
+            //      auto name = self->m_randomGenetor->randomChoice(GROUPS_ENEMIES);
+            //      auto cantidad =
+            //          self->m_randomGenetor->getInt(self->m_config->fight.minEnemy, self->m_config->fight.minEnemy);
+            //      auto poderFuego = self->m_randomGenetor->getDouble(0.0,
+            //      self->m_config->fight.enemyAttackMultiplier);
+            //      return Raider(
+            //          name, cantidad, self->m_randomGenetor, poderFuego, self->m_config->fight.surrenderChance);
+            //  }},
+            // {EngineData::Faction::REFUGEES,
+            //  [](VisitorFactory* self)
+            //  {
+            //      auto name = self->m_randomGenetor->randomChoice(NAMES);
+            //      auto surname = self->m_randomGenetor->randomChoice(SURNAMES);
+            //      auto fullName = name + " " + surname;
+            //      bool isFromVault = self->m_randomGenetor->chance(0.5);
+            //      auto bag = self->bagGenerator(isFromVault);
+            //      return Refugee(fullName, isFromVault, bag);
+            //  }},
+            {EngineData::Faction::CARAVAN,
              [](VisitorFactory* self)
              {
-                 auto name = self->m_randomGenetor->randomChoice(GROUPS_ENEMIES);
-                 auto cantidad =
-                     self->m_randomGenetor->getInt(self->m_config->fight.minEnemy, self->m_config->fight.minEnemy);
-                 auto poderFuego = self->m_randomGenetor->getDouble(0.0, self->m_config->fight.enemyAttackMultiplier);
-                 return Raider(
-                     name, cantidad, self->m_randomGenetor, poderFuego, self->m_config->fight.surrenderChance);
-             }},
-            {EngineData::Faction::REFUGEES,
-             [](VisitorFactory* self)
-             {
-                 auto name = self->m_randomGenetor->randomChoice(NAMES);
-                 auto surname = self->m_randomGenetor->randomChoice(SURNAMES);
-                 auto fullName = name + " " + surname;
-                 bool isFromVault = self->m_randomGenetor->chance(0.5);
-                 auto bag = self->bagGenerator(isFromVault);
-                 return Refugee(fullName, isFromVault, bag);
-             }},
-        };
+                 auto name = self->m_randomGenetor->randomChoice(MERCHANTS);
+                 bool confia = self->m_randomGenetor->chance(0.5);
+                 return Caravan(name, confia, self->m_randomGenetor);
+             }}};
 
     auto itMap = FACTORY_MAP.find(faction);
     if (itMap != FACTORY_MAP.end())

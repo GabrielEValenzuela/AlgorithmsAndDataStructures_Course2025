@@ -61,6 +61,18 @@ void Refugio::registerVisitant(const NPC::VisitanteVariant& visitante)
                 visitor.showInfo();
                 m_refugees.push_back(visitor);
             }
+            else if constexpr (std::is_same_v<VisitorType, Caravan>)
+            {
+                visitor.showInfo();
+                if (visitor.confia())
+                {
+                    std::cout << "🚚 La caravana confía en el refugio y se queda." << '\n';
+                }
+                else
+                {
+                    std::cout << "🚚 La caravana no confía en el refugio y se va." << '\n';
+                }
+            }
             else
             {
                 std::cout << "👀 Visitante sin comportamiento definido." << '\n';
