@@ -27,12 +27,15 @@ public:
      * @param nombre Nombre de la caravana
      * @param confia Si confía en el refugio
      */
-    explicit Caravan(const std::string& nombre, bool confia, RandomEventGenerator* randomGenerator)
+    explicit Caravan(const std::string& nombre,
+                     bool confia,
+                     RandomEventGenerator* randomGenerator,
+                     std::unordered_map<EngineData::Resources, uint8_t> bag)
         : EntidadGenerica(nombre)
         , m_confia(confia)
         , m_randomgenerator(randomGenerator)
+        , m_bag(std::move(bag))
     {
-        // inicializarStock();
     }
 
     /**
@@ -52,11 +55,6 @@ public:
     {
         return m_confia;
     }
-
-    /**
-     * @brief Inicializa el stock de la caravana con recursos aleatorios
-     */
-    void inicializarStock();
 };
 
 #endif // CARAVAN_HPP
