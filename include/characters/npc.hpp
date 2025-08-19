@@ -2,8 +2,8 @@
 #define NPC_TYPES_HPP
 
 #include "characters/asaltante.hpp"
-#include "characters/refugiado.hpp"
 #include "characters/caravana.hpp"
+#include "characters/refugiado.hpp"
 #include <cstdint>
 #include <variant>
 

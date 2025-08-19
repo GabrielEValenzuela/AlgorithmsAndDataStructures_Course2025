@@ -28,6 +28,7 @@ void EventManager::start()
                 wrapperVector<NPC::VisitantChance> visitants;
                 visitants.push_back({NPC::VisitantCategory::REFUGEE, m_engine->engineConfig().events.rateRefugee});
                 visitants.push_back({NPC::VisitantCategory::ENEMY, m_engine->engineConfig().events.rateEnemy});
+                visitants.push_back({NPC::VisitantCategory::CARAVAN, m_engine->engineConfig().events.rateCaravane});
 
                 double totalWeight = 0.0;
                 for (const auto& v : visitants)
@@ -54,6 +55,7 @@ void EventManager::start()
                                 faction = m_engine->wrapperRandomChoice(enemies);
                                 break;
                             }
+                            case NPC::VisitantCategory::CARAVAN: faction = EngineData::Faction::CARAVAN; break;
                         }
 
                         auto npc = m_factory->create(faction);
