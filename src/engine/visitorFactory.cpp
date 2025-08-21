@@ -63,8 +63,7 @@ NPC::VisitanteVariant VisitorFactory::create(EngineData::Faction faction)
              {
                  auto name = self->m_randomGenetor->randomChoice(MERCHANTS);
                  bool confia = self->m_randomGenetor->chance(0.5);
-                 auto bag = self->bagGenerator(false);
-                 return Caravan(name, confia, self->m_randomGenetor, bag);
+                 return Caravan(name, confia, self->m_randomGenetor);
              }}};
 
     auto itMap = FACTORY_MAP.find(faction);

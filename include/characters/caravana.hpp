@@ -27,15 +27,12 @@ public:
      * @param nombre Nombre de la caravana
      * @param confia Si confía en el refugio
      */
-    explicit Caravan(const std::string& nombre,
-                     bool confia,
-                     RandomEventGenerator* randomGenerator,
-                     std::unordered_map<EngineData::Resources, uint8_t> bag)
+    explicit Caravan(const std::string& nombre, bool confia, RandomEventGenerator* randomGenerator)
         : EntidadGenerica(nombre)
         , m_confia(confia)
         , m_randomgenerator(randomGenerator)
-        , m_bag(std::move(bag))
     {
+        inicializarStock();
     }
 
     /**
@@ -44,7 +41,13 @@ public:
     void showInfo() const override
     {
         std::cout << "🚚 CARAVANA: " << m_name << "\n"
-                  << " - ¿Confía en el refugio?: " << (m_confia ? "Sí" : "No") << "\n";
+                  << " - ¿Confía en el refugio?: " << (m_confia ? "Sí" : "No") << "\n"
+                  << " - Bolsa de recursos:\n";
+
+        for (const auto& [resource, quantity] : m_bag)
+        {
+            std::cout << "\t\t* " << EngineData::valueToString(resource) << ": " << static_cast<int>(quantity) << "\n";
+        }
     }
 
     /**
@@ -55,6 +58,12 @@ public:
     {
         return m_confia;
     }
+
+    /**
+     * @brief Genera una bolsa de recursos aleatoria para la caravana
+     * @return Mapa de recursos y cantidades
+     */
+    void inicializarStock();
 };
 
 #endif // CARAVAN_HPP
