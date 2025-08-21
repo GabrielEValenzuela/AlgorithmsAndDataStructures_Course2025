@@ -1,5 +1,6 @@
 #include "engine/visitorFactory.hpp"
-#include "asaltante.hpp"
+#include "characters/asaltante.hpp"
+#include "characters/caravana.hpp"
 
 #include <functional>
 #include <unordered_map>
@@ -57,7 +58,13 @@ NPC::VisitanteVariant VisitorFactory::create(EngineData::Faction faction)
                  auto bag = self->bagGenerator(isFromVault);
                  return Refugee(fullName, isFromVault, bag);
              }},
-        };
+            {EngineData::Faction::CARAVAN,
+             [](VisitorFactory* self)
+             {
+                 auto name = self->m_randomGenetor->randomChoice(MERCHANTS);
+                 bool confia = self->m_randomGenetor->chance(0.5);
+                 return Caravan(name, confia, self->m_randomGenetor);
+             }}};
 
     auto itMap = FACTORY_MAP.find(faction);
     if (itMap != FACTORY_MAP.end())
